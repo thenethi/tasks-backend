@@ -55,8 +55,8 @@ app.get("/tasks/:taskId/",async(request,response)=>{
 // Adding a task
 app.post("/tasks/",async(request,response)=>{
     const taskDetails=request.body;
-    const {taskId,taskName}=taskDetails;
-    const addTaskQuery=`INSERT INTO tasks (task_id,tasks_name) VALUES (${taskId},'${taskName}')`
+    const {taskId,taskName,taskDescription}=taskDetails;
+    const addTaskQuery=`INSERT INTO tasks (task_id,tasks_name,tasks_description) VALUES (${taskId},'${taskName}','${taskDescription}')`
     const addTask=await db.run(addTaskQuery)
     response.send(addTask)
 })
@@ -65,8 +65,8 @@ app.post("/tasks/",async(request,response)=>{
 app.put("/tasks/:taskId/",async(request,response)=>{
     const {taskId}=request.params
     const taskDetails=request.body 
-    const {taskName}=taskDetails
-    const dbQuery=`UPDATE tasks SET tasks_name='${taskName}' WHERE task_id=${taskId};`
+    const {taskName,taskDescription}=taskDetails
+    const dbQuery=`UPDATE tasks SET tasks_name='${taskName}',tasks_description='${taskDescription}' WHERE task_id=${taskId};`
     await db.run(dbQuery);
     response.send("Task updated successfully");
 })
